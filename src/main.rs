@@ -1,28 +1,25 @@
-mod spline_plugin;
+mod player;
+mod raillines;
 
 use bevy::{
     core_pipeline::tonemapping::{DebandDither, Tonemapping},
     post_process::bloom::Bloom,
     prelude::*,
 };
-//use bevy_inspector_egui::{bevy_egui::EguiPlugin, quick::WorldInspectorPlugin};
 
-use crate::spline_plugin::SplinePlugin;
+use crate::{player::PlayerPlugin, raillines::RailLinesPlugin};
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugins(SplinePlugin)
-        // .add_plugins(EguiPlugin::default())
-        // .add_plugins(WorldInspectorPlugin::new())
+        .add_plugins(RailLinesPlugin)
+        .add_plugins(PlayerPlugin)
         .add_systems(Startup, setup)
         .run();
 }
 
 fn setup(
     mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
     //window: Single<&Window>,
 ) {
     //let window_size = window.resolution.physical_size().as_vec2();
@@ -44,9 +41,4 @@ fn setup(
         },
         DebandDither::Enabled,
     ));
-
-    let mesh2d = Mesh2d(meshes.add(RegularPolygon::new(10.0, 6)));
-    let material = MeshMaterial2d(materials.add(Color::hsl(2., 0.55, 0.83)));
-    let transform = Transform::from_xyz(0., 0., 0.);
-    commands.spawn((mesh2d, material, transform));
 }
