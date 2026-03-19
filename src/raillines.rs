@@ -57,7 +57,7 @@ fn draw(
         let mut control_point_markers = ControlPointMarkers(vec![]);
         let material = MeshMaterial2d(materials.add(Color::hsl(267., 0.57, 0.78)));
         for &p in points.iter() {
-            let mesh2d = Mesh2d(meshes.add(RegularPolygon::new(5.0, 6)));
+            let mesh2d = Mesh2d(meshes.add(RegularPolygon::new(3.0, 6)));
             let transform = Transform::from_translation(p.extend(1.));
             let id = commands.spawn((mesh2d, material.clone(), transform)).id();
             control_point_markers.0.push(id);
@@ -69,7 +69,7 @@ fn draw(
         if points.len() >= 2 {
             for (a, b) in points.iter().tuple_windows() {
                 let line = ShapeBuilder::with(&ShapePath::new().move_to(*a).line_to(*b))
-                    .stroke((Color::hsl(189., 0.43, 0.73), 2.))
+                    .stroke((Color::hsl(267., 0.57, 0.78), 2.))
                     .build();
                 let transform = Transform::from_translation(Vec3::Z * 0.5);
                 let id = commands.spawn((line, transform)).id();
